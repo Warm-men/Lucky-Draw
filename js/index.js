@@ -30,32 +30,7 @@ $(function(){
     },500); 
 });
 
-$(document).ready(function(){
-    // $('.myrule').click(function(){
-    //     layer.open({
-    //         type: 1,
-    //         title: false,
-    //         closeBtn: 0,
-    //         shadeClose: true,
-    //         srckin: 'yourclass',
-    //         content: '<div class="rule"><h4>幸运大转盘抽奖活动</h4><p>活动介绍：参与活动即有机会获得幸运奖。此活动为固定奖品，奖品数量有限，祝君好运！</p><br><span>活动时间：2017-7-1至2017-7-7</span><p>奖品设置：<br>奖品一：iPad mini4 1台<br>奖品二：华为智能手表<br>奖品三：小米移动电源 10个<br>奖品四：10元话费 100个<br>奖品五：幸运福袋 1000个<br></p><div class="dash"></div><p>重要声明：<br>1.实物类奖品将在活动结束后7日内安排发货，请耐心等待<br> 2.优惠券类奖品的使用规则详见每个优惠券的介绍页<br>3.请勿通过非法途径参与活动，卡农App有权取消其参与资格<br>4.本活动由卡农策划提供，与苹果公司无关<br>5.卡农App对本次活动保留最终解释权</p></div>'
-    // });
 
-    $.ajax({
-        type: "get",
-        async: true,
-        url: "",
-        dataType: "jsonp",
-        jsonpCallback:"callbackfunction",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
-        success: function(json){
-            if (json.code == 40001) {
-                location.href = "";
-            }
-
-        },
-        error: function(){}
-    });
-});
 
 var turnWheel = {
     rewardNames:[],             //转盘奖品名称数组
@@ -64,7 +39,6 @@ var turnWheel = {
     textRadius:155,             //转盘奖品位置距离圆心的距离
     insideRadius:68,            //转盘内圆的半径
     startAngle:0,               //开始角度
-
     bRotate:false               //false:停止;ture:旋转
 };
 
@@ -84,9 +58,6 @@ var imgThank = new Image();
 var imgXiche = new Image();
     imgXiche.src = "~/../img/xiche.png";
 
-
-
-    var num1 = $('.num').html();
 
     turnWheel.rewardNames = [
         "有机手部护理",
@@ -140,24 +111,6 @@ var imgXiche = new Image();
         });
     };
 
-    $('.pointer').click(function (){
-        
-        // 正在转动，直接返回
-        if(turnWheel.bRotate) return;
-        num1--;
-        $('.num').html(num1);
-        if(parseInt(num1)<0){
-            return $('.num').html(0);
-        }
-
-        turnWheel.bRotate = !turnWheel.bRotate;
-        var count = turnWheel.rewardNames.length;
-        var item = 1;//0 ipad;1 手表;2 移动电源;3 话费;4 福袋;5 谢谢参与
-        // var item = randomNum(0,count - 1);
-        // 开始抽奖
-        rotateFunc(item, turnWheel.rewardNames[item],count);
-    });
-});
 
 
 /*
@@ -172,7 +125,118 @@ function randomNum(n, m){
 
 //页面所有元素加载完毕后执行drawWheelCanvas()方法对转盘进行渲染
 window.onload=function(){
+    var leftTime = 0; //用户剩余抽奖次数，默认为零
+    var item = 7;
     drawWheelCanvas();
+    $(".loading").hide();
+    //加载后首次ajax获取抽奖次数
+    // $.ajax({
+    //     type: "GET",
+    //     async: true,
+    //     url: "http://activity.cnmobi.com.cn/activity/year/start.html?igoModel=test",
+    //     dataType: "jsonp",
+    //     jsonpCallback: "callbackfunction",
+    //     success: function (json) {
+    //         alert("01");
+    //         if ( json.code == 40001 ){
+    //             window.location.href = "http://activity.cnmobi.com.cn/activity/year/start.html?igoModel=test"
+    //         }
+    //     },
+    //     error: function (json) {
+    //         alert(json.msg);
+    //     }
+    // });
+    //获取抽奖次数
+    function lefttimeFn() {
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: "http://activity.cnmobi.com.cn/activity/year/my.html?igoModel=test",
+            dataType: "jsonp",
+            jsonpCallback: "callbackfunction",
+            success: function (json) {
+                if ( json.leftTimes == 0 ){
+                    tipBox("亲，你的抽奖次数已经用完了，下个整点又有5次抽奖机会了哦~");
+                    $('.num').html(json.leftTimes);
+                    leftTime = json.leftTimes;
+                }else{
+                    $('.num').html(json.leftTimes);
+                    leftTime = json.leftTimes;
+                }
+            },
+            error: function (json) {
+                alert("系统异常");
+            }
+        });
+    }
+    setTimeout(function () {
+        lefttimeFn();
+    },500);
+    //提示弹窗
+    function tipBox(tip) {
+        $("#tipBox").html(tip);
+        $(".tipBox").fadeIn();
+        setTimeout(function () {
+            $(".tipBox").fadeOut()
+        },3500)
+    }
+    //后台返回抽奖结果
+    function hit() {
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: "http://activity.cnmobi.com.cn/activity/year/lottery.html?igoModel=test",
+            dataType: "jsonp",
+            jsonpCallback: "callbackfunction",
+            success: function (json) {
+
+                leftTime = json.leftTimes;
+
+                if ( json.isHit == false ){ //没中奖
+                    var getRandomNum = randomNum(1,3);
+                    if (getRandomNum == 1){
+                        return item = 5; //提示谢谢参与
+                    }else if(getRandomNum == 2) {
+                        return item = 7; //提示谢谢参与
+                    }
+                }else if ( json.isHit ){
+                    if (json.showId == "youjihuli"){
+                        return item =0;
+                    }else if (json.showId == "bracelet") {
+                        return item =1;
+                    }else if (json.showId == "crisper") {
+                        return item =2;
+                    }else if (json.showId == "philips") {
+                        return item =4;
+                    }else if (json.showId == "xichequan") {
+                        return item =5;
+                    }else if (json.showId == "yuanbao") {
+                        return item =6;
+                    }
+                }
+            },
+            error: function (json) {
+                alert("系统异常");
+            }
+        });
+    }
+    $('.pointer').click(function (){
+        if ( leftTime == 0 ){
+           return false;
+        }else {
+            hit();
+            // 正在转动，直接返回
+            if(turnWheel.bRotate) return;
+
+            turnWheel.bRotate = !turnWheel.bRotate;
+            var count = turnWheel.rewardNames.length;
+            //0 ipad;1 手表;2 移动电源;3 话费;4 福袋;5 谢谢参与
+            // var item = randomNum(0,count - 1);
+            // 开始抽奖
+            rotateFunc(item, turnWheel.rewardNames[item],count);
+        }
+
+    });
 };
 
 /*

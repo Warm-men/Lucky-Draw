@@ -32,11 +32,25 @@
     </style>
 </head>
 <body class="allbg">
-    <div class="containt">
+
+    <!--加载动画-->
+    <div class="loading">
+        <div class="sk-chasing-dots">
+            <div class="sk-child sk-dot1"></div>
+            <div class="sk-child sk-dot2"></div>
+        </div>
+    </div>
+    <div class="containt" >
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-2.1.4.js"></script>
         <script src="js/jQueryRotate.js"></script>
         <script src="js/index.js"></script>
+        <!--提示-->
+        <div class="tipBox">
+            <div>
+                <label id="tipBox"></label>
+            </div>
+        </div>
         <div class="banner">
             <img src="img/top.jpg" alt="" />
         </div>
@@ -54,7 +68,7 @@
                 <!--剩余次数-->
                 <div class="fre">
                     <div class="txt">
-                        <p>本小时剩余次数:<span class="num">5</span></p>
+                        <p>本小时剩余次数:<span class="num"></span></p>
                         <img src="img/fre.png" alt="" />
                     </div>
                 </div>
@@ -104,10 +118,13 @@
         </div>
     </div>
     <script type="text/javascript">
+
+
+        //本小时内倒计时
         function Countdown() {
             var mydate = new Date(),
                 thisMinutes = 59 - mydate.getMinutes(); //获取当前分钟数(0-59)
-                thisSeconds = 59 - mydate.getSeconds(); //获取当前秒数(0-59)
+            thisSeconds = 59 - mydate.getSeconds(); //获取当前秒数(0-59)
             if ( thisMinutes < 10 ){
                 thisMinutes = "0" + thisMinutes;//补零
             }
@@ -117,7 +134,7 @@
             $('.minutes').html(thisMinutes);
             $('.seconds').html(thisSeconds)
         }
-        setInterval("Countdown()",1000);
+        setInterval("Countdown()",1000);//每秒运行一次
     </script>
 </body>
 </html>
