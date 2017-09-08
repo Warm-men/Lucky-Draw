@@ -110,9 +110,14 @@
         <div id="apply1" class="modal fade padding1" tabindex="-1" data-replace="true" data-backdrop="static" >
             <div class="modal-body">
                 <div class="img1">
-                    <img src="img/end.png" alt="" />
+                    <img src="img/end.png" alt="" id="gitBgImg" />
                 </div>
-                <div id="tip"></div>
+                <div class="gitBox">
+                    <div id="tip"></div>
+                    <div class="gitImg">
+                        <img src="" alt="">
+                    </div>
+                </div>
                 <button type="button" class="but5" data-dismiss="modal" data-toggle="modal"></button>
             </div>
         </div>
@@ -120,21 +125,7 @@
     <script type="text/javascript">
 
 
-        //本小时内倒计时
-        function Countdown() {
-            var mydate = new Date(),
-                thisMinutes = 59 - mydate.getMinutes(); //获取当前分钟数(0-59)
-            thisSeconds = 59 - mydate.getSeconds(); //获取当前秒数(0-59)
-            if ( thisMinutes < 10 ){
-                thisMinutes = "0" + thisMinutes;//补零
-            }
-            if ( thisSeconds < 10 ){
-                thisSeconds = "0" + thisSeconds;//补零
-            }
-            $('.minutes').html(thisMinutes);
-            $('.seconds').html(thisSeconds)
-        }
-        setInterval("Countdown()",1000);//每秒运行一次
+
     </script>
 </body>
 </html>

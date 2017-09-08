@@ -112,6 +112,11 @@ img, fieldset {
 	border: 0;
 	vertical-align: middle
 }
+div{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 input {
 	padding: 0;
 	margin: 0;
@@ -208,12 +213,12 @@ label{  font-weight: 400;}
 	width: 100%;
 	height: 100%;
 	display:  flex;
-	display: webktt-flex;
+	display: -webkit-flex;
 	justify-content: center;
 	align-items: center;
 }
 .tipBox label{
-	padding: 3px 5px;
+	padding: 5px 8px;
 	display: inline-block;
 	background: #393838;
 	border-radius: 8px;
@@ -465,15 +470,29 @@ label{  font-weight: 400;}
     width: 20%;
     height: 20%;
 }
-.modal-body #tip{
-	width: 45%;
-    position: absolute;
-    top: 40%;
-    left: 28%;
-    font-size: 16px;
-    color: #fee4a4;
-    text-align: center;
-    letter-spacing: 5px;
+
+.modal-body .gitBox{
+	width: 80%;
+	position: absolute;
+	top: 58%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 }
-
-
+.modal-body .gitBox #tip{
+	font-size: 1em;
+	color: #f1b115;
+	text-align: center;
+	letter-spacing: 2px;
+}
+.modal-body .gitBox .gitImg{
+	text-align: center;
+	padding: 5px 0;
+}
+.modal-body .gitBox .gitImg img{
+	width: auto;
+	max-height: 100px;
+}

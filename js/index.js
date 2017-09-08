@@ -31,7 +31,6 @@ $(function(){
 });
 
 
-
 var turnWheel = {
     rewardNames:[],             //转盘奖品名称数组
     colors:[],                  //转盘奖品区块对应背景颜色
@@ -60,14 +59,14 @@ var imgXiche = new Image();
 
 
     turnWheel.rewardNames = [
-        "有机手部护理",
+        "价值480元有机手部护理一次",
         "小米手环",
         "乐扣保鲜盒",
         "谢谢参与",
-        "飞利浦迷你搅拌机",
+        "价值429元飞利浦迷你搅拌机",
         "宽途洗车券一张",
         "元宝积分",
-        "谢谢参与"
+        "继续努力"
     ];
     turnWheel.colors = [
         "#f69f38",
@@ -95,11 +94,39 @@ var imgXiche = new Image();
             duration:8000,
             callback:function (){ // 回调方法
                 if(tip=='谢谢参与'){
-                    $('.modal-body img').replaceWith("<img src='img/sorry.png' />");
+                    $('.img1').html("");
+                    $('.img1').html("<img src='img/sorry.png' />");
                     $('#apply1').modal('show');
+                    $('#tip').html("");
+                }else if(tip=='继续努力'){
+                    $('.img1').html("");
+                    $('.img1').html("<img src='img/sorry.png' />");
+                    $('#apply1').modal('show');
+                    $('#tip').html("");
                 }else{
+                    $('.img1').html("");
+                    $('.img1').html("<img src='img/end.png' />");
                     $('#apply1').modal('show');
                     $('#tip').html(tip);
+                    if (tip == '价值480元有机手部护理一次'){
+                        $(".gitImg").html("");
+                        $(".gitImg").html("<img src='img/shoububuli.png' />");
+                    }else if(tip == '小米手环'){
+                        $(".gitImg").html("");
+                        $(".gitImg").html("<img src='img/shouhuan.png' />");
+                    }else if(tip == '价值429元飞利浦迷你搅拌机'){
+                        $(".gitImg").html("");
+                        $(".gitImg").html("<img src='img/jiaobanji.png' />");
+                    }else if(tip == '乐扣保鲜盒'){
+                        $(".gitImg").html("");
+                        $(".gitImg").html("<img src='img/baoxianhe.png' />");
+                    }else if(tip == '宽途洗车券一张'){
+                        $(".gitImg").html("");
+                        $(".gitImg").html("<img src='img/xiche.png' />");
+                    }else if(tip == '元宝积分'){
+                        $(".gitImg").html("");
+                        $(".gitImg").html("<img src='img/yuanbao.png' />");
+                    }
                 }
                 turnWheel.bRotate = !turnWheel.bRotate;
                 if(isMobile.any()) // 判断是否移动设备
@@ -110,7 +137,6 @@ var imgXiche = new Image();
             }
         });
     };
-
 
 
 /*
@@ -125,8 +151,8 @@ function randomNum(n, m){
 
 //页面所有元素加载完毕后执行drawWheelCanvas()方法对转盘进行渲染
 window.onload=function(){
-    var leftTime = 0; //用户剩余抽奖次数，默认为零
-    var item = 7;
+    console.log("lefttimeFn()11");
+    var usrLeftTime = 0; //用户剩余抽奖次数，默认为零
     drawWheelCanvas();
     $(".loading").hide();
     //加载后首次ajax获取抽奖次数
@@ -148,6 +174,7 @@ window.onload=function(){
     // });
     //获取抽奖次数
     function lefttimeFn() {
+        console.log("lefttimeFn()22");
         $.ajax({
             type: "GET",
             async: true,
@@ -156,12 +183,13 @@ window.onload=function(){
             jsonpCallback: "callbackfunction",
             success: function (json) {
                 if ( json.leftTimes == 0 ){
-                    tipBox("亲，你的抽奖次数已经用完了，下个整点又有5次抽奖机会了哦~");
+                    tipBox("亲，你本小时内的抽奖次数已经用完了，欢迎下个小时继续来抽奖~");
                     $('.num').html(json.leftTimes);
-                    leftTime = json.leftTimes;
+                    usrLeftTime = json.leftTimes;
+                    alert(usrLeftTime+"lefttimeFn");
                 }else{
                     $('.num').html(json.leftTimes);
-                    leftTime = json.leftTimes;
+                    usrLeftTime = json.leftTimes;
                 }
             },
             error: function (json) {
@@ -170,8 +198,9 @@ window.onload=function(){
         });
     }
     setTimeout(function () {
+        console.log("lefttimeFn()3333");
         lefttimeFn();
-    },500);
+    },50);
     //提示弹窗
     function tipBox(tip) {
         $("#tipBox").html(tip);
@@ -181,62 +210,84 @@ window.onload=function(){
         },3500)
     }
     //后台返回抽奖结果
-    function hit() {
-        $.ajax({
-            type: "GET",
-            async: true,
-            url: "http://activity.cnmobi.com.cn/activity/year/lottery.html?igoModel=test",
-            dataType: "jsonp",
-            jsonpCallback: "callbackfunction",
-            success: function (json) {
 
-                leftTime = json.leftTimes;
-
-                if ( json.isHit == false ){ //没中奖
-                    var getRandomNum = randomNum(1,3);
-                    if (getRandomNum == 1){
-                        return item = 5; //提示谢谢参与
-                    }else if(getRandomNum == 2) {
-                        return item = 7; //提示谢谢参与
-                    }
-                }else if ( json.isHit ){
-                    if (json.showId == "youjihuli"){
-                        return item =0;
-                    }else if (json.showId == "bracelet") {
-                        return item =1;
-                    }else if (json.showId == "crisper") {
-                        return item =2;
-                    }else if (json.showId == "philips") {
-                        return item =4;
-                    }else if (json.showId == "xichequan") {
-                        return item =5;
-                    }else if (json.showId == "yuanbao") {
-                        return item =6;
-                    }
-                }
-            },
-            error: function (json) {
-                alert("系统异常");
-            }
-        });
-    }
     $('.pointer').click(function (){
-        if ( leftTime == 0 ){
-           return false;
+        var newUsrLeftTimes = usrLeftTime;
+        if ( newUsrLeftTimes == 0 ){
+            tipBox("亲，你本小时内的抽奖次数已经用完了，欢迎下个小时继续来抽奖~");
+            $('.num').html(newUsrLeftTimes);
+            return false;
         }else {
-            hit();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "http://activity.cnmobi.com.cn/activity/year/lottery.html?igoModel=test",
+                dataType: "jsonp",
+                jsonpCallback: "callbackfunction",
+                success: function (json) {
+                    var item;
+                    if(turnWheel.bRotate) return;
+                    turnWheel.bRotate = !turnWheel.bRotate;
+                    var count = turnWheel.rewardNames.length;
+                    usrLeftTime = json.leftTimes;
+                    $('.num').html(json.leftTimes);
+                    if ( json.isHit === false ){ //没中奖
+                        var setNum = randomNum(1,3);
+                        if(setNum === 1){
+                            item = 3;
+                        }else if (setNum === 2){
+                            item =7;
+                        }
+                    }else if ( json.isHit ){
+                        console.log(json.showId);
+                        if (json.showId === "youjihuli"){
+                            item = 0;
+                        }else if (json.showId === "bracelet") {
+                            item = 1;
+                        }else if (json.showId === "crisper") {
+                            item = 2;
+                        }else if (json.showId === "philips") {
+                            item = 4;
+                        }else if (json.showId === "xichequan") {
+                            item = 5;
+                        }else if (json.showId === "yuanbao") {
+                            item = 6;
+                        }
+                    }
+                    rotateFunc(item, turnWheel.rewardNames[item],count);
+                },
+                error: function (json) {
+                    tipBox("亲，您的操作太快了，系统跟不上~");
+                    return false;
+                }
+            });
             // 正在转动，直接返回
-            if(turnWheel.bRotate) return;
-
-            turnWheel.bRotate = !turnWheel.bRotate;
-            var count = turnWheel.rewardNames.length;
             //0 ipad;1 手表;2 移动电源;3 话费;4 福袋;5 谢谢参与
             // var item = randomNum(0,count - 1);
             // 开始抽奖
-            rotateFunc(item, turnWheel.rewardNames[item],count);
         }
-
     });
+
+    //本小时内倒计时
+    function Countdown() {
+        var mydate = new Date(),
+            //thisMinutes = 59 - mydate.getMinutes(); //获取当前分钟数(0-59)
+            //thisSeconds = 59 - mydate.getSeconds(); //获取当前秒数(0-59)
+            thisMinutes = 0;
+        thisSeconds = 0;
+        if(thisMinutes == 0 && thisSeconds == 0){
+            lefttimeFn();
+        }
+        if ( thisMinutes < 10 ){
+            thisMinutes = "0" + thisMinutes;//补零
+        }
+        if ( thisSeconds < 10 ){
+            thisSeconds = "0" + thisSeconds;//补零
+        }
+        $('.minutes').html(thisMinutes);
+        $('.seconds').html(thisSeconds);
+    }
+    setInterval("Countdown()",1000);//每秒运行一次
 };
 
 /*
@@ -326,7 +377,7 @@ function drawWheelCanvas(){
             };
             ctx.drawImage(imgYb,-20,-15,55,55);
         }
-        else if(rewardName.indexOf("谢谢参与")>=0){
+        else if(rewardName.indexOf("继续努力")>=0){
             imgThank.onload=function(){
                 ctx.drawImage(imgThank,-20,-15,55,55);
             };
@@ -335,4 +386,5 @@ function drawWheelCanvas(){
         ctx.restore();
     }
 }
+
 
