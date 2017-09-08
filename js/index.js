@@ -143,64 +143,71 @@ var imgXiche = new Image();
 返回在n和m之间的随机整数
 n<= random <=m
 */
+
 function randomNum(n, m){
     /* Math.floor(Math.random()*10);时，可均衡获取0到9的随机整数。 */
     var random = Math.floor(Math.random()*(m-n)) + n;
     return random;
 }
 
+var usrLeftTime = 0; //用户剩余抽奖次数，默认为零
+//获取抽奖次数
+function lefttimeFn() {
+    console.log("lefttimeFn()20002");
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: "http://activity.cnmobi.com.cn/activity/year/my.html",
+        dataType: "jsonp",
+        jsonpCallback: "callbackfunction",
+        success: function (json) {
+            if ( json.leftTimes == 0 ){
+                tipBox("亲，你本小时内的抽奖次数已经用完了，欢迎下个小时继续来抽奖~");
+                $('.num').html(json.leftTimes);
+                usrLeftTime = json.leftTimes;
+            }else{
+                $('.num').html(json.leftTimes);
+                usrLeftTime = json.leftTimes;
+            }
+        },
+        error: function (json) {
+            tipBox("哎哟喂~转盘君还没醒来，请稍等一下");
+        }
+    });
+}
+setTimeout(function () {
+    lefttimeFn();
+},50);
+
+//本小时内倒计时
+function Countdown() {
+    var mydate = new Date(),
+        thisMinutes = 59 - mydate.getMinutes(); //获取当前分钟数(0-59)
+        thisSeconds = 59 - mydate.getSeconds(); //获取当前秒数(0-59)
+        //thisMinutes = 0;
+        //thisSeconds = 0;
+    if(thisMinutes == 0 && thisSeconds == 0){
+        setTimeout("lefttimeFn()",100)
+    }
+    if ( thisMinutes < 10 ){
+        thisMinutes = "0" + thisMinutes;//补零
+    }
+    if ( thisSeconds < 10 ){
+        thisSeconds = "0" + thisSeconds;//补零
+    }
+    $('.minutes').html(thisMinutes);
+    $('.seconds').html(thisSeconds);
+}
+setInterval("Countdown()",1000);//每秒运行一次
+
 //页面所有元素加载完毕后执行drawWheelCanvas()方法对转盘进行渲染
 window.onload=function(){
     console.log("lefttimeFn()11");
-    var usrLeftTime = 0; //用户剩余抽奖次数，默认为零
+
     drawWheelCanvas();
     $(".loading").hide();
-    //加载后首次ajax获取抽奖次数
-    // $.ajax({
-    //     type: "GET",
-    //     async: true,
-    //     url: "http://activity.cnmobi.com.cn/activity/year/start.html?igoModel=test",
-    //     dataType: "jsonp",
-    //     jsonpCallback: "callbackfunction",
-    //     success: function (json) {
-    //         alert("01");
-    //         if ( json.code == 40001 ){
-    //             window.location.href = "http://activity.cnmobi.com.cn/activity/year/start.html?igoModel=test"
-    //         }
-    //     },
-    //     error: function (json) {
-    //         alert(json.msg);
-    //     }
-    // });
-    //获取抽奖次数
-    function lefttimeFn() {
-        console.log("lefttimeFn()22");
-        $.ajax({
-            type: "GET",
-            async: true,
-            url: "http://activity.cnmobi.com.cn/activity/year/my.html?igoModel=test",
-            dataType: "jsonp",
-            jsonpCallback: "callbackfunction",
-            success: function (json) {
-                if ( json.leftTimes == 0 ){
-                    tipBox("亲，你本小时内的抽奖次数已经用完了，欢迎下个小时继续来抽奖~");
-                    $('.num').html(json.leftTimes);
-                    usrLeftTime = json.leftTimes;
-                    alert(usrLeftTime+"lefttimeFn");
-                }else{
-                    $('.num').html(json.leftTimes);
-                    usrLeftTime = json.leftTimes;
-                }
-            },
-            error: function (json) {
-                alert("系统异常");
-            }
-        });
-    }
-    setTimeout(function () {
-        console.log("lefttimeFn()3333");
-        lefttimeFn();
-    },50);
+
+
     //提示弹窗
     function tipBox(tip) {
         $("#tipBox").html(tip);
@@ -261,33 +268,9 @@ window.onload=function(){
                     return false;
                 }
             });
-            // 正在转动，直接返回
-            //0 ipad;1 手表;2 移动电源;3 话费;4 福袋;5 谢谢参与
-            // var item = randomNum(0,count - 1);
-            // 开始抽奖
         }
     });
 
-    //本小时内倒计时
-    function Countdown() {
-        var mydate = new Date(),
-            //thisMinutes = 59 - mydate.getMinutes(); //获取当前分钟数(0-59)
-            //thisSeconds = 59 - mydate.getSeconds(); //获取当前秒数(0-59)
-            thisMinutes = 0;
-        thisSeconds = 0;
-        if(thisMinutes == 0 && thisSeconds == 0){
-            lefttimeFn();
-        }
-        if ( thisMinutes < 10 ){
-            thisMinutes = "0" + thisMinutes;//补零
-        }
-        if ( thisSeconds < 10 ){
-            thisSeconds = "0" + thisSeconds;//补零
-        }
-        $('.minutes').html(thisMinutes);
-        $('.seconds').html(thisSeconds);
-    }
-    setInterval("Countdown()",1000);//每秒运行一次
 };
 
 /*

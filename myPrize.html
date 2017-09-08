@@ -20,67 +20,350 @@
             max-width: 720px;
             margin: auto;
         }
-        .prize-list-box{ padding: 5px 0; }
+        .prize-list-box{ padding: 5px; }
         .prize-list-box ul{ width: 100%; }
         .prize-list-box ul li{ width: 100%; background-color: #ffffff; height: 12vh; margin-bottom: 5px; }
         .prize-list-box ul li:after{ content: ""; clear: both; display: block;height: 0;visibility: hidden; }
         .prize-list-box ul li .prizeImg{ width: 80px; height: 100%; float: left; display: flex; display: -webkit-flex; justify-content: center; align-items: center; }
         .prize-list-box ul li .prizeImg img{ width: 80%; max-height: 90%;  }
         .prize-list-box ul li .prizeDetail{ width: calc( 100% - 160px ); height: 100%; float: left; display: flex; display: -webkit-flex; flex-direction: column;justify-content: center; }
-        .prize-list-box ul li .prizeDetail p{ font-size: 1.2rem; color: #323232; padding: 3px 0; }
+        .prize-list-box ul li .prizeDetail p{ font-size: 1.2rem; color: #323232; padding: 3px 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;  }
         .prize-list-box ul li .prizeDetail span{ font-size: 1rem; color: #a6a6a6; padding: 3px 0; }
         .prize-list-box ul li .get-prize{ width: 80px; height: 100%; float: left; display: flex; display: -webkit-flex; justify-content: center; align-items: center; }
         .prize-list-box ul li .get-prize span{ font-size: 1rem; color: #fff; background-color: #ff2218; padding: 3px 5px; border-radius: 3px;  }
+        .prize-list-box ul li .get-prize span.active{ background-color: #a09999; }
+        #noPrize{ width: 100vw; height: 100vh; display: flex; display: -webkit-flex; justify-content: center; align-items: center; margin-top: -10px; }
+        #noPrize img{ width: 50vw; vertical-align: middle; }
     </style>
 </head>
 <body>
 
 <div class="containt">
+    <!--提示-->
+    <div class="tipBox">
+        <div>
+            <label id="tipBox"></label>
+        </div>
+    </div>
     <div class="prize-list-box">
         <ul>
-            <li>
-                <div class="prizeImg">
-                    <img src="./img/xiche.png" alt="">
-                </div>
-                <div class="prizeDetail">
-                    <p>奖品名称</p>
-                    <span>2017-09-08 09:00</span>
-                </div>
-                <div class="get-prize">
-                    <span>领取</span>
-                </div>
-            </li>
-            <li>
-                <div class="prizeImg">
-                    <img src="./img/xiche.png" alt="">
-                </div>
-                <div class="prizeDetail">
-                    <p>奖品名称</p>
-                    <span>2017-09-08 09:00</span>
-                </div>
-                <div class="get-prize">
-                    <span>领取</span>
-                </div>
-            </li>
-            <li>
-                <div class="prizeImg">
-                    <img src="./img/xiche.png" alt="">
-                </div>
-                <div class="prizeDetail">
-                    <p>奖品名称</p>
-                    <span>2017-09-08 09:00</span>
-                </div>
-                <div class="get-prize">
-                    <span>领取</span>
-                </div>
-            </li>
+            <!--<li>-->
+                <!--<div class="prizeImg">-->
+                    <!--<img src="./img/shoububuli.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="prizeDetail">-->
+                    <!--<p>价值480元有机手部护理一次</p>-->
+                    <!--<span>2017-09-08 09:00</span>-->
+                <!--</div>-->
+                <!--<div class="get-prize">-->
+                    <!--<span>领取</span>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<div class="prizeImg">-->
+                    <!--<img src="./img/xiche.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="prizeDetail">-->
+                    <!--<p>奖品名称</p>-->
+                    <!--<span>2017-09-08 09:00</span>-->
+                <!--</div>-->
+                <!--<div class="get-prize">-->
+                    <!--<span>领取</span>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<div class="prizeImg">-->
+                    <!--<img src="./img/xiche.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="prizeDetail">-->
+                    <!--<p>奖品名称</p>-->
+                    <!--<span>2017-09-08 09:00</span>-->
+                <!--</div>-->
+                <!--<div class="get-prize">-->
+                    <!--<span>领取</span>-->
+                <!--</div>-->
+            <!--</li>-->
         </ul>
+    </div>
+    <!--没中奖-->
+    <div id="noPrize" style="display: none">
+        <img src="./img/bag.png" alt="没中奖">
+    </div>
+
+    <!--填写个人信息-->
+    <div class="personalInfor" style="display: none;">
+        <div class="popu_box" >
+            <div class="txt_box">
+                <div class="hide_btn"></div>
+                <div class="txt_box_list">
+                    <div>填写你的收货信息</div>
+                </div>
+                <div class="txt_box_list" style="display: none" id="nameBox">
+                    <span>收货人</span>
+                    <input type="text" name="" placeholder="请输入姓名" id="receiver">
+                </div>
+                <div class="txt_box_list">
+                    <span>手机号码</span>
+                    <input type="text" name="" placeholder="请输入手机号码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" id="phone">
+                </div>
+                <div class="txt_box_list addressBox" style="display: none" id="receiverBox">
+                    <span>地址:</span>
+                    <textarea id="address"></textarea>
+                </div>
+                <div class="confirm_btn">
+                    <div class="confirm" id="confirm">确定</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--兑换成功-->
+    <div class="exchangeSuccessPupoBox" style="display: none">
+        <div class="exchangeSuccessBox">
+            <div class="tipIcon"><i class="iconfont">&#xe659;</i></div>
+            <div class="exchangeSuccessText">恭喜你，奖品已兑换成功，奖品于15个工作日内派发物流</div>
+            <div class="exchangeSuccessBtn" id="yesIGotIt">确定</div>
+        </div>
     </div>
 </div>
 
 <script src="./js/jquery-2.1.4.js" type="text/javascript"></script>
 <script type="text/javascript">
+    $(function () {
+        var idArr = new Array(),//保存奖品id
+            prizeType = new Array(); //保存奖品类型
+        var postPrizeId = "";
+        //提示弹窗
+        function tipBox(tip) {
+            $("#tipBox").html(tip);
+            $(".tipBox").fadeIn();
+            setTimeout(function () {
+                $(".tipBox").fadeOut()
+            },2000)
+        }
+        //兑换成功--确认
+        $("#yesIGotIt").on('click',function () {
+            $(".exchangeSuccessPupoBox").hide();
+            location.replace("index.html");
+        });
+        $.ajax({
+            type: "GET",
+            async: true,
+            //url: "http://activity.cnmobi.com.cn/activity/year/mygift.html",
+            url: "./json/data.json",
+            dataType: "json",
+            //jsonpCallback: "callbackfunction",
+            success: function (json) {
+                var obj = json;
+                var data = 0;
+                if ( obj.length === 0 ){
+                    $('#noPrize').show();
+                }else if( obj.length != 0 ){
+                    $(obj).each(function (index) {
+                        //获得年月日      得到日期oTime
+                        var item = obj[index];
 
+                        function getMyDate(str){
+                            var oDate = new Date(str),
+                                oYear = oDate.getFullYear(),
+                                oMonth = oDate.getMonth()+1,
+                                oDay = oDate.getDate(),
+                                oHour = oDate.getHours(),
+                                oMin = oDate.getMinutes(),
+                                oSen = oDate.getSeconds(),
+                                oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间
+                            return oTime;
+                        }
+                        //补0操作
+                        function getzf(num){
+                            if(parseInt(num) < 10){
+                                num = '0'+ num;
+                            }
+                            return num;
+                        }
+                        var createTime = getMyDate(item.createDate);
+                        var isInItem = item.hasOwnProperty("phone");
+                        if( isInItem ){
+                            var htmlText = "<li><div class='prizeImg'><img src="+item.headImgUrl+"></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                            $('.prize-list-box ul').append(htmlText);
+                        }else if( !isInItem ){
+                            data++;
+                            idArr[data] = item.id;
+                            prizeType[data] = item.showId;
+                            var htmlText = "<li><div class='prizeImg'><img src="+item.headImgUrl+"></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"领取"+"</span></div></li>"
+                            $('.prize-list-box ul').append(htmlText);
+                        }
+                       console.log(prizeType);
+
+                    })
+                }
+            },
+            error: function () {
+                tipBox("哎哟喂~奖品还没回来，请稍等一下");
+            }
+        });
+        var needAdrress = false;
+        //我要兑换
+        $(document)
+            .on('click','.gitThisPrize',function () {
+
+                var thisData = $(this).attr('data');
+                var thisPrizeType = prizeType[thisData];
+                postPrizeId = idArr[data];
+                if( thisPrizeType === "crisper" ){//实物需配地址
+                    $("#nameBox").show();
+                    $("#receiverBox").show();
+                    needAdrress = true;
+                }else if( thisPrizeType === "philips" ){
+                    $("#nameBox").show();
+                    $("#receiverBox").show();
+                    needAdrress = true;
+                }else if( thisPrizeType === "bracelet" ){
+                    $("#nameBox").show();
+                    $("#receiverBox").show();
+                    needAdrress = true;
+                }else if( thisPrizeType === "yuanbao" ){
+                    $("#nameBox").hide();
+                    $("#receiverBox").hide();
+                    needAdrress = false;
+                }else if( thisPrizeType === "youjihuli" ){
+                    $("#nameBox").hide();
+                    $("#receiverBox").hide();
+                    needAdrress = false;
+                }else if( thisPrizeType === "xichequan" ){
+                    $("#nameBox").hide();
+                    $("#receiverBox").hide();
+                    needAdrress = false;
+                }
+                $('.personalInfor').show();
+            })
+            .on('click','.hide_btn',function () {
+                if( needAdrress ){
+                    $("#nameBox").hide();
+                    $("#receiverBox").hide();
+                }
+                $('.personalInfor').hide();
+            })
+            .on('click','#confirm',function () {
+                var receiver = $("#receiver").val();
+                var phone = $("#phone").val();
+                var address = $("#address").val();
+                var isChinaName = /^[\u4E00-\u9FA5]{1,6}$/;
+                var telreg = /^1[3|4|5|7|8][0-9]\d{8}$|^\d{8}$/;
+
+                //奖品id
+                var thisPrize = postPrizeId;
+                //先判断是否需要填写地址
+                if( needAdrress ){
+                    if (receiver.length == 0) {
+                        $('.tipBox').fadeIn();
+                        tipBox("请输入收货人姓名");
+                        $("#rec_name").focus();
+                        console.log("kkkkkk");
+                        return false;
+                    }else if (!isChinaName.test(receiver)) {
+                        $('.tipBox').fadeIn();
+                        tipBox("请准确输入您的收货人姓名");
+                        $("#receiver").val("").focus();
+                        return false;
+                    }else if(phone.length !== 11) {
+                        $('.tipBox').fadeIn();
+                        tipBox("请输入您的真实手机号");
+                        $("#phone").focus();
+                        return false;
+                    }else if(!telreg.test(phone)) {
+                        $('.tipBox').fadeIn();
+                        tipBox("请输入正确的手机号");
+                        $("#rec_iphone").focus();
+                        return false;
+                    }else if( address.length == 0 ){
+                        $('.tipBox').fadeIn();
+                        tipBox("请输入您的收货地址");
+                        return false;
+                    }else {
+                        $(this).attr("disabled",true);
+                        address = encodeURI(address);
+                        receiver = encodeURI(receiver);
+                        console.log("needAdrress");
+                    $.ajax({
+                        type: "POST",
+                        async: true,
+                        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+                        url: "http://activity.cnmobi.com.cn/activity/year/input.html",
+                        dataType: "jsonp",
+                        data:{
+                            recordId: thisPrize,
+                            phone: phone,
+                            realname: receiver,
+                            address: address
+                        },
+                        jsonpCallback:"callbackfunction",
+                        success: function(json){
+                            if(json.code == 0){
+                                $('.personalInfor').hide();
+                                $(".exchangeSuccessPupoBox").show();
+                            }else if(json.code == 40050){
+                                tipBox("亲，需要您绑定工商银行信用卡才能领取奖品，3秒后页面将自动调到绑定信用卡页面");
+                                setTimeout(function () {
+                                    window.location.href = "";
+                                },3000)
+                            }
+                            $("#exchange").attr("disabled",false);
+                        },
+                        error: function(){
+                            tipBox("亲，系统反应需要一点时间，请稍后。");
+                        }
+                    });
+                    }
+                }else if(!needAdrress) {
+                    if(phone.length !== 11) {
+                        $('.tipBox').fadeIn();
+                        tipBox("请输入您的真实手机号");
+                        $("#phone").focus();
+                        return false;
+                    }else if(!telreg.test(phone)) {
+                        $('.tipBox').fadeIn();
+                        tipBox("请输入正确的手机号");
+                        $("#rec_iphone").focus();
+                        return false;
+                    }
+                        console.log("8888");
+                    var emptyAddress = "",
+                        emptyrealname = "";
+                    $.ajax({
+                        type: "POST",
+                        async: true,
+                        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+                        url: "http://activity.cnmobi.com.cn/activity/year/input.html",
+                        dataType: "jsonp",
+                        data:{
+                            id: thisPrize,
+                            phone: phone,
+                            realname: emptyrealname,
+                            address: emptyAddress
+                        },
+                        jsonpCallback:"callbackfunction",
+                        success: function(json){
+                            if(json.code == 0){
+                                $('.personalInfor').hide();
+                                $(".exchangeSuccessPupoBox").show();
+                            }else if(json.code == 40050){
+                                tipBox("亲，需要您绑定工商银行信用卡才能领取奖品，3秒后页面将自动调到绑定信用卡页面");
+                                setTimeout(function () {
+                                    window.location.href = "";
+                                },3000)
+                            }
+                            $("#exchange").attr("disabled",false);
+                        },
+                        error: function(){
+                            tipBox("亲，系统反应需要一点时间，请稍后。");
+                        }
+                    });
+                }
+
+
+
+            })
+    })
 </script>
 
 </body>
