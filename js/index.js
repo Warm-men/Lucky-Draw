@@ -98,11 +98,13 @@ var imgXiche = new Image();
                     $('.img1').html("<img src='img/sorry.png' />");
                     $('#apply1').modal('show');
                     $('#tip').html("");
+                    $(".gitImg").html("");
                 }else if(tip=='继续努力'){
                     $('.img1').html("");
                     $('.img1').html("<img src='img/sorry.png' />");
                     $('#apply1').modal('show');
                     $('#tip').html("");
+                    $(".gitImg").html("");
                 }else{
                     $('.img1').html("");
                     $('.img1').html("<img src='img/end.png' />");
@@ -202,8 +204,6 @@ setInterval("Countdown()",1000);//每秒运行一次
 
 //页面所有元素加载完毕后执行drawWheelCanvas()方法对转盘进行渲染
 window.onload=function(){
-    console.log("lefttimeFn()11");
-
     drawWheelCanvas();
     $(".loading").hide();
 
@@ -228,7 +228,7 @@ window.onload=function(){
             $.ajax({
                 type: "GET",
                 async: true,
-                url: "http://activity.cnmobi.com.cn/activity/year/lottery.html?igoModel=test",
+                url: "http://activity.cnmobi.com.cn/activity/year/lottery.html",
                 dataType: "jsonp",
                 jsonpCallback: "callbackfunction",
                 success: function (json) {

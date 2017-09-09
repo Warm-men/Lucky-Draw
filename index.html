@@ -68,7 +68,7 @@
                 <!--剩余次数-->
                 <div class="fre">
                     <div class="txt">
-                        <p>本小时剩余次数:<span class="num"></span></p>
+                        <p>本小时剩余次数:<span class="num">0</span></p>
                         <img src="img/fre.png" alt="" />
                     </div>
                 </div>
@@ -124,7 +124,11 @@
     </div>
     <script type="text/javascript">
 
-
+        $(function () {
+            $('.gotoMyPrize').on('click',function () {
+                window.location.href = "http://igostatic.cnmobi.com.cn/Lucky-Draw/myPrize.html?v=pp3"
+            })
+        })
 
     </script>
 </body>
