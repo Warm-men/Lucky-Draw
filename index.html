@@ -74,7 +74,7 @@
                 </div>
                 <!--本小时倒计时-->
                 <div class="coountdow-box">
-                    <span class="nextTime">下次抽奖时间：</span>
+                    <span class="nextTime">下次抽奖时间倒计时：</span>
                     <div>
                         <span class="minutes">00</span>&nbsp;:&nbsp;
                         <span class="seconds">00</span>
@@ -117,6 +117,9 @@
                     <div class="gitImg">
                         <img src="" alt="">
                     </div>
+                    <div class="getThisPrize">
+                        <a href="myPrize.html">我的奖品</a>
+                    </div>
                 </div>
                 <button type="button" class="but5" data-dismiss="modal" data-toggle="modal"></button>
             </div>
@@ -124,12 +127,120 @@
     </div>
     <script type="text/javascript">
 
-        $(function () {
+
             $('.gotoMyPrize').on('click',function () {
                 window.location.href = "http://igostatic.cnmobi.com.cn/Lucky-Draw/myPrize.html?v=pp3"
-            })
-        })
+            });
+
+            //提示弹窗
+            function tipBoxfirst(tip) {
+                $("#tipBox").html(tip);
+                $(".tipBox").fadeIn();
+                setTimeout(function () {
+                    $(".tipBox").fadeOut()
+                },3500)
+            }
+            function lefttimeFn() {
+                $.ajax({
+                    type: "GET",
+                    async: true,
+                    url: "http://activity.cnmobi.com.cn/activity/year/my.html",
+                    dataType: "jsonp",
+                    jsonpCallback: "callbackfunction",
+                    success: function (json) {
+                        usrLeftTime = json.leftTimes;
+                        if ( json.leftTimes == 0 ){
+                            tipBoxfirst("亲，你本小时内的抽奖次数已经用完了，欢迎下个小时继续来抽奖~");
+                            $('.num').html("0");
+
+                        }else{
+                            $('.num').html(json.leftTimes);
+
+                        }
+                    },
+                    error: function (json) {
+                        tipBoxfirst("哎哟喂~转盘君还没醒来，请稍等一下");
+                    }
+                });
+            }
+            //lefttimeFn();
+            //本小时内倒计时
+            function Countdown() {
+                var mydate = new Date(),
+                    thisMinutes = 59 - mydate.getMinutes(); //获取当前分钟数(0-59)
+                    thisSeconds = 59 - mydate.getSeconds(); //获取当前秒数(0-59)
+                //thisMinutes = 0;
+                //thisSeconds = 0;
+                if(thisMinutes == 0 && thisSeconds == 0){
+                    setTimeout("lefttimeFn()",100)
+                }
+                if ( thisMinutes < 10 ){
+                    thisMinutes = "0" + thisMinutes;//补零
+                }
+                if ( thisSeconds < 10 ){
+                    thisSeconds = "0" + thisSeconds;//补零
+                }
+                $('.minutes').html(thisMinutes);
+                $('.seconds').html(thisSeconds);
+            }
+            setInterval("Countdown()",1000);//每秒运行一次
+
 
     </script>
 </body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+
+    var docUrl = document.URL;
+    var requestUrl = "http://icbcigo.cnmobi.com.cn/wsb/api/weixin/auth/js?url="+docUrl;
+    var fileref = document.createElement('script');
+    fileref.setAttribute("type","text/javascript");
+    fileref.setAttribute("src",requestUrl);
+
+    document.getElementsByTagName("head")[0].appendChild(fileref);
+
+
+
+    wx.ready(function () {
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage({
+            title: '916工银爱购3周年幸运大转盘',
+            desc: '4000多份大奖等你来抽，中奖概率高达50%',
+            link: 'http://activity.cnmobi.com.cn/activity/year/start.html',
+            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/top.jpg',
+            trigger: function (res) {
+
+            },
+            success: function (res) {
+                addOne();
+            },
+            cancel: function (res) {
+
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+
+        wx.onMenuShareTimeline({
+            title: '916工银爱购3周年幸运大转盘',
+            link: 'http://activity.cnmobi.com.cn/activity/year/start.html',
+            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/top.jpg',
+            trigger: function (res) {
+
+            },
+            success: function (res) {
+                addOne();
+            },
+            cancel: function (res) {
+
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+
+    });
+
+</script>
 </html>

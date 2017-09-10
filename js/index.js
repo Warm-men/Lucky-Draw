@@ -99,12 +99,14 @@ var imgXiche = new Image();
                     $('#apply1').modal('show');
                     $('#tip').html("");
                     $(".gitImg").html("");
+                    $(".getThisPrize").hide();
                 }else if(tip=='继续努力'){
                     $('.img1').html("");
                     $('.img1').html("<img src='img/sorry.png' />");
                     $('#apply1').modal('show');
                     $('#tip').html("");
                     $(".gitImg").html("");
+                    $(".getThisPrize").hide();
                 }else{
                     $('.img1').html("");
                     $('.img1').html("<img src='img/end.png' />");
@@ -113,21 +115,27 @@ var imgXiche = new Image();
                     if (tip == '价值480元有机手部护理一次'){
                         $(".gitImg").html("");
                         $(".gitImg").html("<img src='img/shoububuli.png' />");
+                        $(".getThisPrize").show();
                     }else if(tip == '小米手环'){
                         $(".gitImg").html("");
                         $(".gitImg").html("<img src='img/shouhuan.png' />");
+                        $(".getThisPrize").show();
                     }else if(tip == '价值429元飞利浦迷你搅拌机'){
                         $(".gitImg").html("");
                         $(".gitImg").html("<img src='img/jiaobanji.png' />");
+                        $(".getThisPrize").show();
                     }else if(tip == '乐扣保鲜盒'){
                         $(".gitImg").html("");
                         $(".gitImg").html("<img src='img/baoxianhe.png' />");
+                        $(".getThisPrize").show();
                     }else if(tip == '宽途洗车券一张'){
                         $(".gitImg").html("");
                         $(".gitImg").html("<img src='img/xiche.png' />");
+                        $(".getThisPrize").show();
                     }else if(tip == '元宝积分'){
                         $(".gitImg").html("");
                         $(".gitImg").html("<img src='img/yuanbao.png' />");
+                        $(".getThisPrize").show();
                     }
                 }
                 turnWheel.bRotate = !turnWheel.bRotate;
@@ -154,53 +162,9 @@ function randomNum(n, m){
 
 var usrLeftTime = 0; //用户剩余抽奖次数，默认为零
 //获取抽奖次数
-function lefttimeFn() {
-    console.log("lefttimeFn()20002");
-    $.ajax({
-        type: "GET",
-        async: true,
-        url: "http://activity.cnmobi.com.cn/activity/year/my.html",
-        dataType: "jsonp",
-        jsonpCallback: "callbackfunction",
-        success: function (json) {
-            if ( json.leftTimes == 0 ){
-                tipBox("亲，你本小时内的抽奖次数已经用完了，欢迎下个小时继续来抽奖~");
-                $('.num').html(json.leftTimes);
-                usrLeftTime = json.leftTimes;
-            }else{
-                $('.num').html(json.leftTimes);
-                usrLeftTime = json.leftTimes;
-            }
-        },
-        error: function (json) {
-            tipBox("哎哟喂~转盘君还没醒来，请稍等一下");
-        }
-    });
-}
-setTimeout(function () {
-    lefttimeFn();
-},50);
 
-//本小时内倒计时
-function Countdown() {
-    var mydate = new Date(),
-        thisMinutes = 59 - mydate.getMinutes(); //获取当前分钟数(0-59)
-        thisSeconds = 59 - mydate.getSeconds(); //获取当前秒数(0-59)
-        //thisMinutes = 0;
-        //thisSeconds = 0;
-    if(thisMinutes == 0 && thisSeconds == 0){
-        setTimeout("lefttimeFn()",100)
-    }
-    if ( thisMinutes < 10 ){
-        thisMinutes = "0" + thisMinutes;//补零
-    }
-    if ( thisSeconds < 10 ){
-        thisSeconds = "0" + thisSeconds;//补零
-    }
-    $('.minutes').html(thisMinutes);
-    $('.seconds').html(thisSeconds);
-}
-setInterval("Countdown()",1000);//每秒运行一次
+
+
 
 //页面所有元素加载完毕后执行drawWheelCanvas()方法对转盘进行渲染
 window.onload=function(){
@@ -219,6 +183,7 @@ window.onload=function(){
     //后台返回抽奖结果
 
     $('.pointer').click(function (){
+
         var newUsrLeftTimes = usrLeftTime;
         if ( newUsrLeftTimes == 0 ){
             tipBox("亲，你本小时内的抽奖次数已经用完了，欢迎下个小时继续来抽奖~");
@@ -232,7 +197,7 @@ window.onload=function(){
                 dataType: "jsonp",
                 jsonpCallback: "callbackfunction",
                 success: function (json) {
-                    var item;
+                    var item = 7;
                     if(turnWheel.bRotate) return;
                     turnWheel.bRotate = !turnWheel.bRotate;
                     var count = turnWheel.rewardNames.length;

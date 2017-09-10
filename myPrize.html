@@ -151,7 +151,7 @@
         $.ajax({
             type: "GET",
             async: true,
-            url: "http://activity.cnmobi.com.cn/activity/year/mygift.html?igoModel=test",
+            url: "http://activity.cnmobi.com.cn/activity/year/mygift.html",
             //url: "./json/data.json",
             dataType: "jsonp",
             jsonpCallback: "callbackfunction",
@@ -184,45 +184,43 @@
                         }
                         var createTime = getMyDate(item.createDate);
                         var isInItem = item.hasOwnProperty("phone");
-                        if( isInItem ){
-                            var htmlText = "<li><div class='prizeImg'><img src="+item.headImgUrl+"></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                        if( isInItem ){//实物需配地址
+                            var thisShowId = item.showId;
+                            var htmlText = "";
+
+                            if( thisShowId === "crisper" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/baoxianhe.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                            }else if( thisShowId === "philips" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/jiaobanji.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                            }else if( thisShowId === "bracelet" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/shouhuan.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                            }else if( thisShowId === "yuanbao" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/yuanbao.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                            }else if( thisShowId === "youjihuli" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/shoububuli.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                            }else if( thisShowId === "xichequan" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/xiche.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                            }
                             $('.prize-list-box ul').append(htmlText);
-                            $(".gitThisPrize").on('click',function () {
-                                var thisData = $(this).attr('data');
-                                var thisPrizeType = prizeType[thisData];
-                                postPrizeId = idArr[thisData];
-                                if( thisPrizeType === "crisper" ){//实物需配地址
-                                    $("#nameBox").show();
-                                    $("#receiverBox").show();
-                                    needAdrress = true;
-                                }else if( thisPrizeType === "philips" ){
-                                    $("#nameBox").show();
-                                    $("#receiverBox").show();
-                                    needAdrress = true;
-                                }else if( thisPrizeType === "bracelet" ){
-                                    $("#nameBox").show();
-                                    $("#receiverBox").show();
-                                    needAdrress = true;
-                                }else if( thisPrizeType === "yuanbao" ){
-                                    $("#nameBox").hide();
-                                    $("#receiverBox").hide();
-                                    needAdrress = false;
-                                }else if( thisPrizeType === "youjihuli" ){
-                                    $("#nameBox").hide();
-                                    $("#receiverBox").hide();
-                                    needAdrress = false;
-                                }else if( thisPrizeType === "xichequan" ){
-                                    $("#nameBox").hide();
-                                    $("#receiverBox").hide();
-                                    needAdrress = false;
-                                }
-                                $('.personalInfor').show();
-                            })
                         }else if( !isInItem ){
                             data++;
                             idArr[data] = item.id;
                             prizeType[data] = item.showId;
+                            thisShowId = item.showId;
                             var htmlText = "<li><div class='prizeImg'><img src="+item.headImgUrl+"></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                            if( thisShowId === "crisper" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/baoxianhe.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                            }else if( thisShowId === "philips" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/jiaobanji.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                            }else if( thisShowId === "bracelet" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/shouhuan.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                            }else if( thisShowId === "yuanbao" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/yuanbao.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                            }else if( thisShowId === "youjihuli" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/shoububuli.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                            }else if( thisShowId === "xichequan" ){
+                                htmlText = "<li><div class='prizeImg'><img src='./img/xiche.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                            }
                             $('.prize-list-box ul').append(htmlText);
                         }
                     })
@@ -326,14 +324,13 @@
                         },
                         jsonpCallback:"callbackfunction",
                         success: function(json){
-                            alert(json.code);
                             if(json.code == 0){
                                 $('.personalInfor').hide();
                                 $(".exchangeSuccessPupoBox").show();
                             }else if(json.code == 40050){
                                 tipBox("亲，需要您绑定工商银行信用卡才能领取奖品，3秒后页面将自动调到绑定信用卡页面");
                                 setTimeout(function () {
-                                    window.location.href = "";
+                                    window.location.href = "http://icbcigo.cnmobi.com.cn/wsb/api/ishop/redirect?timestamp=0&action=mybank";
                                 },3000)
                             }
                             $("#exchange").attr("disabled",false);
@@ -355,7 +352,6 @@
                         $("#rec_iphone").focus();
                         return false;
                     }
-                        console.log("8888");
                     var emptyAddress = "",
                         emptyrealname = "";
                     $.ajax({
@@ -372,14 +368,14 @@
                             address: emptyAddress
                         },
                         success: function(json){
-                            alert(json.code);
+
                             if(json.code == 0){
                                 $('.personalInfor').hide();
                                 $(".exchangeSuccessPupoBox").show();
                             }else if(json.code == 40050){
                                 tipBox("亲，需要您绑定工商银行信用卡才能领取奖品，3秒后页面将自动调到绑定信用卡页面");
                                 setTimeout(function () {
-                                    window.location.href = "";
+                                    window.location.href = "http://icbcigo.cnmobi.com.cn/wsb/api/ishop/redirect?timestamp=0&action=mybank";
                                 },3000)
                             }
                             //$("#exchange").attr("disabled",false);
@@ -394,4 +390,57 @@
 </script>
 
 </body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+
+    var docUrl = document.URL;
+    var requestUrl = "http://icbcigo.cnmobi.com.cn/wsb/api/weixin/auth/js?url="+docUrl;
+    var fileref = document.createElement('script');
+    fileref.setAttribute("type","text/javascript");
+    fileref.setAttribute("src",requestUrl);
+    document.getElementsByTagName("head")[0].appendChild(fileref);
+
+
+    wx.ready(function () {
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage({
+            title: '916工银爱购3周年幸运大转盘',
+            desc: '4000多份大奖等你来抽，中奖概率高达50%',
+            link: 'http://activity.cnmobi.com.cn/activity/year/start.html',
+            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/top.jpg',
+            trigger: function (res) {
+
+            },
+            success: function (res) {
+                addOne();
+            },
+            cancel: function (res) {
+
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+
+        wx.onMenuShareTimeline({
+            title: '916工银爱购3周年幸运大转盘',
+            link: 'http://activity.cnmobi.com.cn/activity/year/start.html',
+            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/top.jpg',
+            trigger: function (res) {
+
+            },
+            success: function (res) {
+                addOne();
+            },
+            cancel: function (res) {
+
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+
+    });
+
+</script>
 </html>
