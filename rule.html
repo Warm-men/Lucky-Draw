@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>爱购3周年</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        html, body {
+            position: relative;
+            height: 100%;
+        }
+        body {
+            background: #fee29d;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            padding: 0;
+            min-width: 320px;
+            max-width: 720px;
+            margin: auto;
+        }
+        .rule-box ul{ width: 100%; list-style: none; padding-bottom: 20px; }
+        .rule-box ul li{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            width: 80%;
+            margin: auto;
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="containt">
+    <div class="rule-box">
+        <img src="./img/rule.jpg" alt="">
+        <ul>
+            <li>1、抽奖游戏时间为9月15日0:00-24:00期间每个整点，共24个抽奖时段；</li>
+            <li>2、抽奖游戏适用于深圳地区工银信用卡持卡人参与，每个整点均可参与；</li>
+            <li>3、中奖后点击“我的奖品”，可查看并领取抽中的奖品；</li>
+            <li>4、领取奖品时，已绑卡用户输入对应领奖信息，提交即可；如未绑卡，请根据页面提示绑定工银信用卡，绑定成功后即可领取奖品；</li>
+            <li>5、所有贵重礼品需持卡人携带本人工银信用卡及身份证前往深圳地区指定地点领取；</li>
+            <li>6、部分礼品工作人员将打电话与客户预留电话核实好地址后进行寄送，寄送目前限深圳地区；</li>
+            <li>7、实物中奖礼品，从中奖日算起保留3个月时间，未在指定时间前领取的客户将视为自动放弃；</li>
+            <li>8、通过任何舞弊手段参与本活动的，一经发现不予兑奖；</li>
+            <li>9、工商银行不是本次活动的产品供应商，产品的质量问题及由此产生的后果由供应商负责，工商银行不承担任何责任；</li>
+            <li>10、 领取地点及时间：深圳市福田区南园路234号五邑大厦8楼，请在正常工作时间09:00-12:00,14:00-17:00领取；</li>
+            <li>11、上述活动内容如有变化，请以中国工商银行深圳市分行“工银爱购”微信公众号发布内容为准</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+
+    var docUrl = document.URL;
+    var requestUrl = "http://icbcigo.cnmobi.com.cn/wsb/api/weixin/auth/js?url="+docUrl;
+    var fileref = document.createElement('script');
+    fileref.setAttribute("type","text/javascript");
+    fileref.setAttribute("src",requestUrl);
+    document.getElementsByTagName("head")[0].appendChild(fileref);
+    wx.ready(function () {
+        wx.hideOptionMenu();
+    });
+
+</script>
+</html>

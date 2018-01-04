@@ -195,7 +195,7 @@
                             }else if( thisShowId === "bracelet" ){
                                 htmlText = "<li><div class='prizeImg'><img src='./img/shouhuan.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
                             }else if( thisShowId === "yuanbao" ){
-                                htmlText = "<li><div class='prizeImg'><img src='./img/yuanbao.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
+                                htmlText = "<li><div class='prizeImg'><img src='./img/yuanbao.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已发放"+"</span></div></li>"
                             }else if( thisShowId === "youjihuli" ){
                                 htmlText = "<li><div class='prizeImg'><img src='./img/shoububuli.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已领取"+"</span></div></li>"
                             }else if( thisShowId === "xichequan" ){
@@ -207,19 +207,19 @@
                             idArr[data] = item.id;
                             prizeType[data] = item.showId;
                             thisShowId = item.showId;
-                            var htmlText = "<li><div class='prizeImg'><img src="+item.headImgUrl+"></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                            var htmlText = "<li><div class='prizeImg'><img src="+item.headImgUrl+"></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点击领取"+"</span></div></li>"
                             if( thisShowId === "crisper" ){
                                 htmlText = "<li><div class='prizeImg'><img src='./img/baoxianhe.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
                             }else if( thisShowId === "philips" ){
-                                htmlText = "<li><div class='prizeImg'><img src='./img/jiaobanji.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                                htmlText = "<li><div class='prizeImg'><img src='./img/jiaobanji.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点击领取"+"</span></div></li>"
                             }else if( thisShowId === "bracelet" ){
-                                htmlText = "<li><div class='prizeImg'><img src='./img/shouhuan.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                                htmlText = "<li><div class='prizeImg'><img src='./img/shouhuan.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点击领取"+"</span></div></li>"
                             }else if( thisShowId === "yuanbao" ){
-                                htmlText = "<li><div class='prizeImg'><img src='./img/yuanbao.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                                htmlText = "<li><div class='prizeImg'><img src='./img/yuanbao.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='active'>"+"已发放"+"</span></div></li>"
                             }else if( thisShowId === "youjihuli" ){
-                                htmlText = "<li><div class='prizeImg'><img src='./img/shoububuli.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                                htmlText = "<li><div class='prizeImg'><img src='./img/shoububuli.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点击领取"+"</span></div></li>"
                             }else if( thisShowId === "xichequan" ){
-                                htmlText = "<li><div class='prizeImg'><img src='./img/xiche.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点领取"+"</span></div></li>"
+                                htmlText = "<li><div class='prizeImg'><img src='./img/xiche.png'></div><div class='prizeDetail'><p>"+item.prizeName+"</p><span>"+createTime+"</span></div><div class='get-prize'><span class='gitThisPrize'  data="+data+">"+"点击领取"+"</span></div></li>"
                             }
                             $('.prize-list-box ul').append(htmlText);
                         }
@@ -407,7 +407,7 @@
             title: '916工银爱购3周年幸运大转盘',
             desc: '4000多份大奖等你来抽，中奖概率高达50%',
             link: 'http://activity.cnmobi.com.cn/activity/year/start.html',
-            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/top.jpg',
+            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/share.png',
             trigger: function (res) {
 
             },
@@ -425,7 +425,7 @@
         wx.onMenuShareTimeline({
             title: '916工银爱购3周年幸运大转盘',
             link: 'http://activity.cnmobi.com.cn/activity/year/start.html',
-            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/top.jpg',
+            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/share.png',
             trigger: function (res) {
 
             },

@@ -101,7 +101,7 @@
         <div class="footer">
             <img src="img/foot.png" alt="" />
         </div>
-        <script src="layer/layer.js"></script>
+        <!--<script src="layer/layer.js"></script>-->
         <div class="myrule">
             <span>活动规则</span>
             <i class="iconfont">&#xe6d2;</i>
@@ -131,6 +131,9 @@
             $('.gotoMyPrize').on('click',function () {
                 window.location.href = "http://igostatic.cnmobi.com.cn/Lucky-Draw/myPrize.html?v=pp3"
             });
+            $('.myrule').on('click',function () {
+                window.location.href = "http://igostatic.cnmobi.com.cn/Lucky-Draw/rule.html"
+            });
 
             //提示弹窗
             function tipBoxfirst(tip) {
@@ -151,11 +154,9 @@
                         usrLeftTime = json.leftTimes;
                         if ( json.leftTimes == 0 ){
                             tipBoxfirst("亲，你本小时内的抽奖次数已经用完了，欢迎下个小时继续来抽奖~");
-                            $('.num').html("0");
-
+                            $('.num').html(json.leftTimes);
                         }else{
                             $('.num').html(json.leftTimes);
-
                         }
                     },
                     error: function (json) {
@@ -163,7 +164,7 @@
                     }
                 });
             }
-            //lefttimeFn();
+            lefttimeFn();
             //本小时内倒计时
             function Countdown() {
                 var mydate = new Date(),
@@ -207,7 +208,7 @@
             title: '916工银爱购3周年幸运大转盘',
             desc: '4000多份大奖等你来抽，中奖概率高达50%',
             link: 'http://activity.cnmobi.com.cn/activity/year/start.html',
-            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/top.jpg',
+            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/share.png',
             trigger: function (res) {
 
             },
@@ -225,7 +226,7 @@
         wx.onMenuShareTimeline({
             title: '916工银爱购3周年幸运大转盘',
             link: 'http://activity.cnmobi.com.cn/activity/year/start.html',
-            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/top.jpg',
+            imgUrl: 'http://igostatic.cnmobi.com.cn/Lucky-Draw/img/share.png',
             trigger: function (res) {
 
             },
